@@ -1,8 +1,8 @@
 ##
 # Ruby API for Sina MicroBlog Weiyouxi, 
-#    developped on Ruby 1.8.7, and tested on Rails 3.1.3
+#    developped on Ruby 1.9.3, and tested on Rails 3.2.3
 # By Lead Frenzy (ldfren@gmail.com) MSN:ldfren@hotmail.com  QQ:20294415 http://leadfrenzy.net
-# 2012.01.08 v0.0.1
+# 2012.04.08 v0.0.2
 ##
 
 ## Sample: use it to get user infor in Rails controller
@@ -16,7 +16,7 @@
 #  # then you can read user information from @user_info
 ##
 
-require 'sha1'
+require 'digest'
 
 # define check error exception
 class CheckError < StandardError; end
@@ -76,7 +76,7 @@ class WeiyouxiClient
     end
 
     baseString = self.buildBaseString(new_params);
-    raise CheckError, 'Signature error' if @signature.to_s != SHA1.sha1(baseString.to_s+@secret.to_s).to_s;
+    raise CheckError, 'Signature error' if @signature.to_s != Digest::SHA1.hexdigest(baseString.to_s+@secret.to_s).to_s;
   end
 
   def setAndCheckSessionKey(session_key)
@@ -130,7 +130,7 @@ class WeiyouxiClient
 
     new_params = new_params.merge(data);
     baseString = self.buildBaseString(new_params);
-    @signature = SHA1.sha1(baseString + @secret);
+    @signature = Digest::SHA1.hexdigest(baseString + @secret);
     baseString = baseString + '&signature=' + @signature.to_s;
     return baseString;
   end
