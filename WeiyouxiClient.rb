@@ -12,7 +12,7 @@
 #	app_secret = 2222222222;
 #  # params hash includes wyx_user_id,wyx_session_key,wyx_create,wyx_expire,wyx_signature keys, which from weibo.com
 #  weiyouxiclient = WeiyouxiClient.new(app_key, app_secret, params);
-#  @user_info = weiyouxiclient('user/show', { :uid=>33333 });
+#  @user_info = weiyouxiclient.get('user/show', { :uid=>33333 });
 #  # then you can read user information from @user_info
 ##
 
